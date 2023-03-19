@@ -1,0 +1,13 @@
+{
+  "miniprogramRoot": "./",
+  "projectname": "gpt-assitant",
+  "description": "基于open-api开发的一个AI聊天助手",
+  "appid": "touristappid",
+  "setting": {
+    "urlCheck": true,
+    "es6": false,
+    "postcss": false,
+    "minified": false
+  },
+  "compileType": "miniprogram"
+}
