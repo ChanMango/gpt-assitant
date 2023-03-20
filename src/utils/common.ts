@@ -6,7 +6,7 @@
  */
 
 import Taro from '@tarojs/taro';
-
+//从缓存中获取数据
 export const getStorageData = async (key: string) => {
   let result: any;
   try {

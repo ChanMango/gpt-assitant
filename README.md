@@ -9,6 +9,7 @@ Taro 3 - MortgageCalculator
 基于Taro 3开发的多端（React Native、Weapp、H5）实例
 
 
+
 > 开发React Native， 推荐阅读[React Native 端开发流程](https://nervjs.github.io/taro/docs/react-native)和[React Native 端开发前注意](https://nervjs.github.io/taro/docs/react-native-remind)
 
 
@@ -35,7 +36,7 @@ Taro 3 - MortgageCalculator
 └── yarn.lock
 ```
 
-此项目旨在为Taro 3开发多端应用提供一个可参考的案例，封装一些支持多端的组件，提供一份开发多端应用的思路、技巧，能够快速上手开发
+此项目基于taro框架进行构建，旨在开发一个快速生成一个跨端的gpt助手
 
 
 ## 在线预览
@@ -55,10 +56,10 @@ Taro 3 - MortgageCalculator
 
 ```
   # clone到本地
-  git clone https://github.com/wuba/Taro-Mortgage-Calculator.git
+  git clone https://github.com/ChanMango/gpt-assitant.git
   
   # 进去项目根目录
-  cd Taro-Mortgage-Calculator
+  cd gpt-assitant
   
   # 安装依赖
   yarn

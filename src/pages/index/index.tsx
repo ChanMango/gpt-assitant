@@ -1,17 +1,18 @@
-import { Component, PropsWithChildren } from 'react'
+import { Component, PropsWithChildren, ReactNode } from 'react'
 import { View, Text } from '@tarojs/components'
 import './index.less'
+import React from 'react'
 
-export default class Index extends Component<PropsWithChildren> {
-  componentDidMount () { }
+export default class Index extends Component<PropsWithChildren<ReactNode>> {
+  componentDidMount() { }
 
-  componentWillUnmount () { }
+  componentWillUnmount() { }
 
-  componentDidShow () { }
+  componentDidShow() { }
 
-  componentDidHide () { }
+  componentDidHide() { }
 
-  render () {
+  render() {
     return (
       <View className='index'>
         <Text>Hello world!</Text>

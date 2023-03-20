@@ -15,13 +15,10 @@ import {
   BoxShadow,
   StatusBar
 } from "@components";
-import { TitleTpl } from "./title-tpl";
 import {
   getRenderList,
-  COMPUTE_WAY_TITLE,
   OPTION,
 } from "./constans";
-import { equalInterestCalc } from "./helper";
 import { isAndriod, setGlobalData, getStorageData, fomatFloat } from "@utils";
 import ChatDialog from "./chat-dailog";
 
@@ -54,8 +51,41 @@ export default class HouseLoanCompute extends Component<any, any> {
           - message: 此属性指定要在对话框中显示的消息文本
           - isUser: 此属性指定消息是来自用户（true）还是来自机器人（false）
           通过属性控制，聊天对话框将以不同的背景颜色和对齐方式呈现，这样您就可以轻松地在您的React Native应用程序中创建可定制的聊天UI了。`
-        }
+        }, {
+          user: "Robot",
+          text: `使用该组件时，您需要传递以下属性：
+          - message: 此属性指定要在对话框中显示的消息文本
+          - isUser: 此属性指定消息是来自用户（true）还是来自机器人（false）
+          通过属性控制，聊天对话框将以不同的背景颜色和对齐方式呈现，这样您就可以轻松地在您的React Native应用程序中创建可定制的聊天UI了。`
+        },
+        {
+          user: "Robot",
+          text: `使用该组件时，您需要传递以下属性：
+          - message: 此属性指定要在对话框中显示的消息文本
+          - isUser: 这样您就可以轻松地在您的React Native应用程序中创建可定制的聊天UI了。`
+        },
+        {
+          user: "JIkes",
+          text: "metrics api检测出现故障>=3次"
+        },
+        {
+          user: "JIkes",
+          text: "metrics api检测出现故障>=3次"
+        },
+        {
+          user: "JIkes",
+          text: "metrics api检测出现故障>=3次"
+        },
+        {
+          user: "JIkes",
+          text: "metrics api检测出现故障>=3次"
+        },
+        {
+          user: "JIkes",
+          text: "metrics api检测出现故障>=3次"
+        },
       ],//message list
+      sendMsg: "",
       // 计算结果显示
       showResult: false,
       // 月付
@@ -404,18 +434,6 @@ export default class HouseLoanCompute extends Component<any, any> {
     });
   };
 
-  /**
-   * 首付选择手动输入处理
-   * @param e
-   */
-  downPayRateHandle = (e: any) => {
-    const { value } = e.detail;
-    const valueNumbe = parseInt(value, 10);
-    // 输入范围0-99
-    this.setState({
-      downPayRateCustom: valueNumbe
-    });
-  };
 
   /**
    * 确定手动输入首付比例
@@ -494,81 +512,17 @@ export default class HouseLoanCompute extends Component<any, any> {
         parseInt(params.loanAmount) - params.accumulatTotalPirce;
     }
   };
-
+  // 在这里进行输入内容的埋点+校验
   checkParams = () => {
-    const { params, loanType } = this.state;
-    const {
-      loanAmount,
-      accumulatTotalPirce,
-      commerceTotalPirce,
-      accumulatLoanLimit
-    } = params;
-    if (loanAmount === 0) {
+    const { sendMsg } = this.state;
+    if (sendMsg.length < 1) {
       Taro.showToast({
-        title: `贷款金额不能为0`,
-        icon: "none"
-      });
-      return false;
-    }
-    if (
-      loanType === 0 &&
-      loanAmount != commerceTotalPirce + accumulatTotalPirce
-    ) {
-      Taro.showToast({
-        title: `商贷金额和公积金贷款金额之和必须等于贷款总额`,
-        icon: "none"
-      });
-      return false;
-    }
-    if (loanType === 2 && loanAmount > accumulatLoanLimit) {
-      Taro.showToast({
-        title: `当前城市公积金最高可贷${accumulatLoanLimit}万`,
+        title: `发送内容不能为空`,
         icon: "none"
       });
       return false;
     }
     return true;
-  };
-
-  getTip = (showMonthlyPay = true) => {
-    const {
-      params,
-      loanType,
-      loanLrpType,
-      commerceLoanRateNew,
-      userLoanWay
-    } = this.state;
-    const {
-      commerceLoanYear,
-      accumulatFundYear,
-      accumulatFundRate,
-      accumulatTotalPirce,
-      commerceTotalPirce,
-      commerceLoanRate,
-      loanAmount,
-      downPayRate
-    } = params;
-    const downPayRateStr = `首付${fomatFloat(downPayRate * 100, 2)}%`;
-    const accumulatStr = `公积金贷${loanType === 2 ? loanAmount : accumulatTotalPirce
-      }万·${accumulatFundYear}年·利率${fomatFloat(accumulatFundRate * 100, 2)}%`;
-    const commerceLoanRateStr = `${fomatFloat(
-      (loanLrpType === 1 ? commerceLoanRateNew : commerceLoanRate) * 100,
-      2
-    )}`;
-    const commerceStr = `商业贷${loanType === 1 ? loanAmount : commerceTotalPirce
-      }万·${commerceLoanYear || 0}年·利率${commerceLoanRateStr}%`;
-    const loanStr =
-      loanType === 0
-        ? [accumulatStr, commerceStr]
-        : loanType === 1
-          ? [commerceStr]
-          : [accumulatStr];
-    const loanWayStr = `${userLoanWay || "等额本息"}`;
-    const tip = (showMonthlyPay
-      ? [downPayRateStr, ...loanStr, loanWayStr]
-      : [downPayRateStr, ...loanStr]
-    ).join("、");
-    return tip;
   };
 
   submit = async () => {
@@ -579,45 +533,18 @@ export default class HouseLoanCompute extends Component<any, any> {
     });
 
     const {
-      params,
-      loanType,
-      loanLrpType,
-      commerceLoanRateNew,
-      userLoanWay
-    } = this.state;
+      params } = this.state;
     const {
-      commerceLoanYear,
-      accumulatFundYear,
-      accumulatFundRate,
-      accumulatTotalPirce,
-      loanAmount,
-      commerceTotalPirce,
-      commerceLoanRate,
-      houseTotal
-    } = params;
-    const res: any = await equalInterestCalc({
-      totalPrice: houseTotal,
-      commerceLoanYear,
-      commerceLoanRate:
-        loanLrpType === 1 ? commerceLoanRateNew : commerceLoanRate,
-      accumulatFundYear,
-      accumulatFundRate,
-      accumulatTotalPirce: loanType === 2 ? loanAmount : accumulatTotalPirce,
-      commerceTotalPirce: loanType === 1 ? loanAmount : commerceTotalPirce
-    });
+      loanAmount } = params;
+    const res: any = await 1;
     try {
-      const tip = this.getTip(false);
       this.computeResult = {
         ...res,
         loanAmount,
-        tip
       };
       const backgroundColor = "#12B983";
       this.setState({
-        tip,
         showResult: true,
-        equalInterestPayMonth: res.equalInterest.payMonth,
-        equalPrincipalPayMonth: res.equalPrincipal.payMonth,
         backgroundColor
       });
       Taro.setNavigationBarColor({
@@ -630,37 +557,14 @@ export default class HouseLoanCompute extends Component<any, any> {
           scrollTop: 0,
           duration: 300
         });
-      const list: any = (await getStorageData("LOAN_HISTORY")) || [];
+      const list: any = (await getStorageData("MESSAGE_HISTORY")) || [];
       const historyList = [
-        {
-          commerceLoanYear: commerceLoanYear,
-          commerceTotalPirce:
-            loanType === 1
-              ? loanAmount
-              : loanType === 2
-                ? 0
-                : commerceTotalPirce,
-          accumulatFundYear,
-          accumulatTotalPirce:
-            loanType === 1
-              ? 0
-              : loanType === 2
-                ? loanAmount
-                : accumulatTotalPirce,
-          payMonthStr:
-            userLoanWay === "等额本息"
-              ? "每月应还(等额本息)"
-              : "首月应还(等额本金)",
-          firstPay:
-            userLoanWay === "等额本息"
-              ? res.equalInterest.payMonth
-              : res.equalPrincipal.payMonth
-        },
+        {},
         ...list
       ];
       await Taro.setStorage({
-        key: "LOAN_HISTORY",
-        data: historyList.slice(0, 10)
+        key: "MESSAGE_HISTORY",
+        data: historyList
       });
     } catch (e) {
       console.log(e);
@@ -674,9 +578,6 @@ export default class HouseLoanCompute extends Component<any, any> {
 
   render() {
     const {
-      way,
-      loanType,
-      renderList,
       keyboardHeight,
       btnOpacity,
       backgroundColor
@@ -703,8 +604,6 @@ export default class HouseLoanCompute extends Component<any, any> {
                 className="keyboard-box-view"
                 onKeyboardDidHide={this.onKeyboardDidHide}
               >
-                {/* <Text className="keyboard-box-text">请输入2</Text> */}
-
                 <Input
                   // @ts-ignore
                   keyboardType="number-pad"
@@ -718,7 +617,7 @@ export default class HouseLoanCompute extends Component<any, any> {
                     // @ts-ignore 针对安卓文字显示不全
                     paddingVertical: 0
                   }}
-                  onInput={this.downPayRateHandle}
+                  // onInput={}
                   // onBlur={this.downPayRateConfirm}
                   holdKeyboard
                 />
@@ -744,45 +643,24 @@ export default class HouseLoanCompute extends Component<any, any> {
           <ChatDialog messages={this.state.msgList} currentUser={"JIkes"} ></ChatDialog>
         </KeyboardAwareScrollView>
 
-        <BoxShadow
-          shadowColor="#000"
-          shadowOffset={{
-            width: 0,
-            height: -1
-          }}
-          shadowOpacity={0.1}
-          shadowRadius={1}
-          elevation={5}
-          className="compute"
-          style={{
-            opacity: btnOpacity,
-          }}
-          boxShadow="0px 2px 8px 0px rgba(211,215,218,1)"
-        >
-          <SafeAreaView>
+        <View className="compute" onClick={this.submit}>
+          <Input
+            type="text"
+            // 针对小程序中底部fixed input被遮盖一部分 设置光标距离键盘距离
+            cursorSpacing={10}
 
-            <View className="compute-btn" onClick={this.submit}>
-              <Input
-                // @ts-ignore
-                keyboardType="number-pad"
-                type="text"
-                // 针对小程序中底部fixed input被遮盖一部分 设置光标距离键盘距离
-                cursorSpacing={10}
-                placeholder={"请输入搜索的内容"}
-                className="keyboard-box-input"
-                // focus
-                style={{
-                  // @ts-ignore 针对安卓文字显示不全
-                  paddingVertical: 0
-                }}
-                onInput={this.downPayRateHandle}
-                // onBlur={this.downPayRateConfirm}
-                holdKeyboard
-              />
-              <Button className="send_msg">发送</Button>
-            </View>
-          </SafeAreaView>
-        </BoxShadow>
+            placeholder={"                                 请输入搜索内容"}
+            className="compute-input"
+            // focus
+            style={{
+              // @ts-ignore 针对安卓文字显示不全
+              paddingVertical: 0
+            }}
+            // onBlur={this.downPayRateConfirm}
+            holdKeyboard
+          />
+          <Button className="compute-send_msg" onClick={this.submit}>发送</Button>
+        </View>
       </SafeAreaView>
     );
   }
