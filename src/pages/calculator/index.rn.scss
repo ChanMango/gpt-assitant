@@ -1,9 +1,82 @@
 .calculator {
-  width: 100%;
-  background-color: #E9F9F4;
-  flex: 1;
-  position: relative;
+  background-color: #4c69a5;
+  display: flex;
 }
+.chat_container {
+  padding-left: 10px;
+  padding-right: 10px;
+  flex-direction: column;
+  flex: 1;
+}
+
+.chatBubble {
+  align-self: 'flex-start';
+}
+
+
+.compute {
+  width: 100%;
+  min-height: 80px;
+  elevation: 5px;
+  z-index: 1;
+  // background-color: #E9F9F4;
+  padding-left: 10px;
+  padding-right: 10px;
+  flex: 1;
+  display: flex;
+  flex-flow: row nowrap;
+  align-items: flex-start;
+  justify-content: space-between;
+
+
+  &-input {
+    borderTopLeftRadius: 10px;
+    borderTopRightRadius: 10px;
+    borderBottomRightRadius: 10px;
+    borderBottomLeftRadius: 10px;
+    width: 80%;
+    padding: 10px;
+    min-height: 80px;
+    background: #ffffff;
+    text-align: left;
+    shadowOpacity: 0.1;
+    shadowRadius: 10;
+    elevation: 4; // for android
+    font-size: 28px;
+    font-family: PingFangSC-Regular;
+    font-weight: 400;
+    color: rgb(9, 9, 9);
+  } 
+
+    &-send_msg {
+      // align-items: center;
+      // justify-content: center;
+      // margin-right: 15px;
+      // display: flex;
+      // align-items: center;
+      // justify-content: center;
+      width: 18%;
+      min-height: 80px;
+      background: #33CC66;
+      color: #E7EBEE;
+      border-radius: 10px;
+      text-align: center;
+      // flex: 1;
+      font-family: PingFangSC-Regular;
+      shadowOpacity: 0.1;
+      shadowRadius: 4;
+      elevation: 4; // for android
+    }
+
+    &-placeholder {
+      // flex: 1;
+      min-height: 80px;
+      font-size: 36px;
+      text-align: center;
+    }
+  
+}
+
 
 .monty-pay {
   align-items: flex-end;
@@ -236,97 +309,6 @@
 
 }
 
-.send_msg {
-  position: absolute;
-  // bottom: 0;
-  // left: 0;
-  right: 0;
-  width: 15pt;
-  z-index: 10;
-  // display: flex;
-  align-items: center;
-  justify-content: center;
-  // margin: 16px auto;
-  // display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 20%;
-  // height: 60px;
-  background: rgb(201, 107, 35);
-  border-radius: 5px;
-  text-align: center;
-  flex: 1;
-  font-size: 25px;
-  font-family: PingFangSC-Regular;
-}
-
-.compute {
-  position: absolute;
-  padding-top: 15px;
-  margin-bottom: 50px;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  width: 100%;
-  elevation: 5px;
-  z-index: 1;
-  background-color: #E9F9F4;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-
-  &-input {
-    margin-left: 15px;
-    margin-right: auto;
-    borderTopLeftRadius:10px;
-    borderTopRightRadius:10px;
-    borderBottomRightRadius:10px;
-    borderBottomLeftRadius:10px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 76%;
-    height: 80px;
-    background: #ffffff;
-    text-align: left;
-    flex: 1;
-    shadowOpacity: 0.1;
-    shadowRadius: 4;
-    elevation: 4; // for android
-
-    &-text {
-      font-size: 36px;
-      font-family: PingFangSC-Regular;
-      font-weight: 400;
-      color: rgba(255, 255, 255, 1);
-    }
-  }
-  &-send_msg {
-    position: absolute;
-    right: 0;
-    z-index: 1;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    margin-right: 15px;
-    // display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 18%;
-    height: 80px;
-    background: #00FF66;
-    // color: #FFFFFF;
-    border-radius: 10px;
-    text-align: center;
-    flex: 1;
-    font-size: 25px;
-    font-family: PingFangSC-Regular;
-    shadowOpacity: 0.1;
-    shadowRadius: 4;
-    elevation: 4; // for android
-  }
-}
-
 .fixed {
   position: absolute;
   top: 0;
@@ -344,7 +326,7 @@
   height: 100px;
   left: 0;
   right: 0;
-  z-index: 99;
+  z-index: 1;
   background: #FFFFFF;
   display: flex;
   align-items: center;
@@ -446,20 +428,4 @@
       color: rgba(255, 255, 255, 1);
     }
   }
-}
-
-.chat_container {
-  // background-color: #0B0F12;
-  padding-left: 15px;
-  padding-right: 15px;
-  flex: 1;
-  justify-content: 'flex-end';
-}
-
-.chatBubble {
-  align-self: 'flex-start';
-  // margin: 5;
-  // padding: 10;
-  // borderRadius: 10;
-  // backgroundColor: '#ccc',
 }

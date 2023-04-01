@@ -36,7 +36,7 @@
     "Android >= 4.1",
     "ios >= 8"
   ],
-  "author": "qiuz",
+  "author": "yeung",
   "lint-staged": {
     "*.{js,jsx,ts,tsx}": [
       "eslint --fix"
@@ -44,15 +44,15 @@
   },
   "husky": {
     "hooks": {
-      "commit-msg": "commitlint -E HUSKY_GIT_PARAMS",
-      "pre-commit": "lint-staged"
+      "commit-msg": "commitlint -E HUSKY_GIT_PARAMS"
     }
   },
   "dependencies": {
     "@babel/runtime": "^7.7.7",
     "@codler/react-native-keyboard-aware-scroll-view": "^2.0.0",
     "@pmmmwh/react-refresh-webpack-plugin": "^0.5.7",
-    "@tarojs/cli": "^3.5.7",
+    "@react-native-clipboard/clipboard": "^1.11.2",
+    "@tarojs/cli": "^3.2.16",
     "@tarojs/components": "^3.5.7",
     "@tarojs/plugin-framework-react": "^3.5.7",
     "@tarojs/react": "^3.5.7",
@@ -62,14 +62,17 @@
     "@tarojs/taro-rn": "^3.5.7",
     "dayjs": "^1.11.7",
     "lodash": "4.17.21",
+    "openai": "^3.2.1",
     "react": "^17.0.2",
+    "react-devtools": "^4.27.4",
     "react-dom": "^17.0.2",
     "react-jwchat": "^1.5.1",
     "react-native": "^0.68.2",
+    "react-native-clipboard": "^0.0.5",
     "react-native-easy-chat-ui": "^0.4.14",
     "react-refresh": "^0.14.0",
     "taro-ui": "^3.0.0-alpha.3",
-    "webpack": "5.69.0"
+    "webpack": "5.76.3"
   },
   "devDependencies": {
     "@babel/core": "^7.8.0",
@@ -90,7 +93,7 @@
     "husky": "^4.3.5",
     "lint-staged": "^10.5.3",
     "react-native-linear-gradient": "^2.5.6",
-    "stylelint": "9.3.0",
+    "stylelint": "^9.10.1",
     "typescript": "^4.1.0"
   }
 }
